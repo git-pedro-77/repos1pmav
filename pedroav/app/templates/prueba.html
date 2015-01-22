@@ -1,0 +1,286 @@
+{% extends 'main.html' %}
+{% block contenido %}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prueba con HTML</title>
+
+<!-- Llamando a los estilos y librerias -->
+<link href="static/css/jquery.dataTables.min.css" rel="stylesheet"><!-- Estilo de la tabla -->
+<script src="static/js/jquery.dataTables.min.js"></script> <!-- Para la paginacion -->
+<script src="static/js/bootstrapPager.min.js"></script><!-- para paginacion -->
+
+<!-- auto busqueda -->
+<link href="static/css/jquery-ui.min.css" rel="stylesheet">
+<script src="static/js/jquery-ui.min.js"></script> 
+
+<!--Para que salga el calendario-->
+<link href="static/css/datepicker.css" rel="stylesheet">
+<script src="static/js/bootstrap-datepicker.js"></script>
+
+
+<!--Para Validar los campos -->
+<link href="static/css/jquery.validity.css" rel="stylesheet">
+<script src="static/js/jquery.validity.js"></script>
+
+
+<script type="text/javascript">
+<!--el ja query se debe colcoar siempre $ y numerar para llamar al id -->
+$(function(){
+	$('#btncrear').click(function(){<!--  -->
+		$('#PanelInsertarCLiente').show(); <!--  -->
+		$('#btncrear').hide(); <!-- para ocultar el boton-->
+	}); 
+	
+	$('#btncancelar').click(function(){<!--  -->
+		$('#PanelInsertarCLiente').hide();<!--  -->
+		$('#btncrear').show(); <!-- para ocultar el boton-->
+	});
+	
+	$('#fecha_nacimiento').datepicker({
+		format:"yyyy-mm-dd"
+	});
+	
+	$('#formP').validity(function(){
+		$('#nombre')
+		 .require();
+		
+		$('#apaterno')
+		 .require();
+		
+		$('#amaterno')
+		 .require();
+		
+		$('#Cedula')
+		.require()
+		.match("number");
+		
+		 $('#celular')
+		 .require()
+		 .match("number");
+	});
+	
+	$('#formP').validity("input:text, select,textarea" );
+});
+</script>
+</head>
+<body>
+
+
+	<div id="PanelInsertarCLiente" style="display: none;"> <!-- no va a mostrar el panel esta oculto -->
+		<div class="panel panel-primary"><!-- todo class es tomado desde el bootstrap -->
+			<div class="panel-heading">
+				<h3 class="panel-title">Formulario de Registro Cliente</h3> <!--Nombre del registro -->
+
+			</div>
+			<div class="panel-body">
+			<div id="formAdd" aling="center">
+			<form action="/addPersona" method="post" id="formP" name="formP" 
+			class="form-horizontal" role="form"> <!--estilos-->
+			
+			<div class="form-group">
+			<label for="nombre" class="col-sm-2 control-label">Nombre:</label> <!-- class propio del bootstrap -->
+			<div class="col-sm-10"> <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+			<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Campo de texto Nombre">
+			</div> 
+			</div>
+			
+			<div class="form-group">
+			<label for="apaterno" class="col-sm-2 control-label">A. Paterno:</label> <!-- class propio del bootstrap -->
+			<div class="col-sm-10"> <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+			<input type="text" id="apaterno" name="apaterno" class="form-control">
+			</div> 
+			</div>
+			
+			<div class="form-group">
+			<label for="amaterno" class="col-sm-2 control-label">A. Materno:</label> <!-- class propio del bootstrap -->
+			<div class="col-sm-10"> <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+			<input type="text" id="amaterno" name="amaterno" class="form-control">
+			</div> 
+			</div>
+			
+			<div class="form-group">
+			<label for="Cedula" class="col-sm-2 control-label">C&eacute;dula:</label> <!-- class propio del bootstrap -->
+			<div class="col-sm-10"> <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+			<input type="text" id="Cedula" name="Cedula" class="form-control">
+			</div> 
+			</div>
+			
+			<div class="form-group">
+			<label for="fecha_nacimiento" class="col-sm-2 control-label">Fecha Nacimiento:</label> <!-- class propio del bootstrap -->
+			<div class="col-sm-10"> <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+			<input type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">
+			</div> 
+			</div>
+			
+			
+			<div class="form-group">
+			<label for="sexo" class="col-sm-2 control-label">Sexo:</label> <!-- class propio del bootstrap -->
+			<div class="radio"> 
+				<label class="checkbox-inline" >
+				<input type="radio" value="M" name="sexo" checked="checked">
+				Masculino</label>
+				
+			 	<label class="checkbox-inline">
+			 	<input type="radio" value="F" name="sexo">
+			 	Femenino</label>
+			 	
+			</div> 
+			</div>
+			
+			<div class="form-group">
+			<label for="direccion" class="col-sm-2 control-label">Direcci&oacute;n:</label> <!-- class propio del bootstrap -->
+			<div class="col-sm-10"> <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+			<textarea  rows="4" class= "form-control" name="direccion"></textarea>
+			</div> 
+			</div>
+			
+			<div class="form-group">
+			<label for="celular" class="col-sm-2 control-label">Celular:</label> <!-- class propio del bootstrap -->
+			<div class="col-sm-10"> <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+			<input type="text" id="celular" class="form-control" name="celular">
+			</div> 
+			</div>
+			
+			<div class="form-group">
+			<label  for="estado" class="col-sm-2 control-label">Estado:</label> <!-- class propio del bootstrap -->
+			<div class="col-sm-10"> <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+				<select name="estado" class="form-control">
+					<option  value="1">Activo</option>
+					<option value="2">Inactivo</option>
+				</select>
+			</div> 
+			</div>
+			
+			
+			<div class="form-group">
+			<div class="col-sm-10">
+				<h4 align="center">
+				<input type="submit"  name="btnEnviar"  class="btn btn-success" value="Registrar"> 
+				<input type="reset" name="btnLimpiar" class="btn btn-info" value="Limpiar">
+				<input type="button" name="btnCancelar" id="btncancelar" class="btn btn-warning" value="Cancelar">
+				</h4>
+			</div> 
+			</div>
+			
+			</form>
+			</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	
+	
+	
+	<div id="divformS" align="center">
+	<form action="/buscardato" id="form" class="form-inline" role="form">
+	<div class="form-group">
+	<label for="bnombre" class="col-sm-2 control-label">Buscar Nombre:</label>   <!-- class propio del bootstrap -->
+	<div class="col-sm-10">                                                      <!--los classs es para que pueda reenderizarse a la pantalla que vayamos a usar -->
+	<input type="text" id="bnombre" name="bnombre" class="form-control">
+	<input type="submit"  name="btnbuscar"  class="btn btn-primary" value="Buscar" id="btnbuscar"> 
+	<input type="button" id="btncrear" class="btn btn-success" value="Crear">     <!-- class es par ael estilo -->
+	</div> 
+	</div>
+	
+	
+	</form>
+
+	</div>
+	
+	
+	<div class="table-responsive" id="divtableitsae">	
+	<table class="table" id="tableItsae">                                         <!-- para poder lalmar luego con el id -->
+		<thead> 
+		<tr>
+			<th>Nombre</th>
+			<th>A.Paterno</th>
+			<th>A.Materno</th>
+			<th>Cedula</th>
+			<th>Fecha Nacimineto</th>
+			<th>Sexo</th>
+			<th>Dirrecion</th>
+			<th>Celular</th>
+			<th>Estado</th>
+			<th>Editar</th>
+			<th>Eliminar</th>
+					
+		</tr>
+		</thead>	
+		<tbody>	
+		{% for d in data %}
+		<tr>
+			<td>{{d[1]}}</td>
+			<td>{{d[2]}}</td>
+			<td>{{d[3]}}</td>
+			<td>{{d[4]}}</td>
+			<td>{{d[5]}}</td>
+			<td>{{d[6]}}</td>
+			<td>{{d[7]}}</td>
+			<td>{{d[8]}}</td>
+			<td>{{d[9]}}</td>
+			<td>
+			<div id="divformEdit" align="center">
+				<form action="/editardato" id="form" class="form-inline" role="form">
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button type="button" name="btneditar" class="btn btn-info" value="Editar" id=btneditar>     <!-- class es par ael estilo -->
+								<img src="static/img/modificar.png" >
+							</button>
+						</div> 
+					</div>
+				</form>
+			</div>
+			</td>
+			
+			<td>
+				<div id="divformEli" align="center">
+					<form action="/eliminardato" id="form" class="form-inline" role="form">
+						<div class="form-group">
+							<div class="col-sm-10">
+								<button type="button" name="btneliminar" class="btn btn-danger" value="Elimnar" id=btneliminar>     <!-- class es par ael estilo -->
+									<img src="static/img/eliminar.png">
+								</button>
+							</div> 
+						</div>
+					</form>
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	</div>
+	
+	
+<script type="text/javascript">
+	$('#tableItsae').DataTable({ <!--es para llamar a id de la tabla-->
+		paginType:"bootstrapPager", 
+		pagerSettings:{ searchOnEnter:true, <!--para buscar-->
+			language: "Pagina ~ of paginas" 
+			}
+	}
+	);
+</script>
+
+<script type="text/javascript">
+	$('#bnombre').autocomplete({ <!--es para llamar a id de la tabla-->
+		source:"/buscarauto", <!--Para enviar la url y llamar al url-->
+		minLength:2
+	});
+
+
+</script>
+
+<h4 align="center">
+	<img src="static/Logo/cade.jpg" alt="Propiedad de PEDRO.ABAD" width="100" height="100" />
+</h4>
+
+</body>
+
+
+
+{% endblock %}
+
+
+
