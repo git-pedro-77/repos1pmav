@@ -3,6 +3,9 @@
 Created on 19/1/2015
 
 @author: PC30
+
+Pedro Abad Vinces 
+Primer Proyecto en ITSAE de python con github
 '''
 
 from app import app
